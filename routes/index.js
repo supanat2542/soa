@@ -9,6 +9,18 @@ router.get('/',async function(req, res, next) {
   res.render('index', { resultData: result.rows });
 });
 
+router.get('/toprecover',async function(req, res, next) {
+  const result = await db.getrecover();
+  // console.log(result.rows);
+  res.render('toprecover', { resultData: result.rows });
+});
+
+router.get('/topdeath',async function(req, res, next) {
+  const result = await db.getdead();
+  // console.log(result.rows);
+  res.render('topdeath', { resultData: result.rows });
+});
+
 router.get('/topconfirm',async function(req, res, next) {
   const result = await db.gettopcon();
   // console.log(result.rows);
@@ -16,7 +28,7 @@ router.get('/topconfirm',async function(req, res, next) {
 });
 
 router.get('/table',async function(req, res, next) {
-  // const result = await db.gettopcon();
+  const result = await db.gettable();
   // console.log(result.rows);
   res.render('table', { resultData: result.rows });
 });
