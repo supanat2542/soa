@@ -13,21 +13,17 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">Covid - 19</a>
-        <!-- <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation">
-          <span class="home-toggler-icon"></span>
-        </button> -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Covid - 19</a>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/">World Map <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/table">Table</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</a>
               <div class="dropdown-menu" aria-labelledby="dropdownId">
                 <a class="dropdown-item" href="/topconfirm">Top 10 Confirmed</a>
@@ -36,10 +32,6 @@
               </div>
             </li>
           </ul>
-          <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> -->
         </div>
       </nav>
 
@@ -66,9 +58,11 @@
               <td><%=data.dead%></td>
               <td><%=data.recover%></td>
               <td scope="row">
-                <a href="/dataCountry/<%=data.country%>">
+                <button type="button" class="btn btn-primary">
+                  <a style="color: aliceblue;" href="/dataProvince/<%=data.country%>/<%=data.state%>">
                     Checkmore
-                </a>
+                  </a>
+                </button>
             </td>
             </tr>
             <% }); %>
@@ -86,27 +80,52 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     
-    <script>
-     var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our dataset
     
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45]
-        }]
-    },
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+        `<% resultData.forEach(function(data){ %>`,
+        '<%=data.country%>',
+        `<% }); %>`
+      ],
+        datasets: [
+        {
+          label: 'Confirmed',
+          backgroundColor: 'rgba(0, 0, 255, 0.4)',
+          borderColor: 'rgba(0, 0, 255, 1)',
+          data: [
+          `<% resultData.forEach(function(data){ %>`,  
+            '<%=data.confirm%>',
+          `<% }); %>`
+        ]
+        },{
+          label: 'Recovered',
+          backgroundColor: 'rgba(0, 128, 0, 0.4)',
+          borderColor: 'rgba(0, 128, 0, 1)',
+          data: [
+          `<% resultData.forEach(function(data){ %>`,  
+            '<%=data.recover%>',
+          `<% }); %>`
+        ]
+        },{
+          label: 'Death',
+          backgroundColor: 'rgba(255, 0, 0, 0.4)',
+          borderColor: 'rgba(255, 0, 0, 1)',
+          data: [
+          `<% resultData.forEach(function(data){ %>`,  
+            '<%=data.dead%>',
+          `<% }); %>`
+        ]
+        },
+      ]
+      },
 
-    // Configuration options go here
-    options: {}
-});
-      </script>
+      // Configuration options go here
+      options: {}
+    });
+  </script>
   </body>
 </html>

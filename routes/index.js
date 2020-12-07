@@ -36,8 +36,20 @@ router.get('/table',async function(req, res, next) {
 router.get('/dataCountry/:country',async function(req, res, next) {
   var country = req.params.country;
   const result = await db.srcCountry(country);
-  console.log(result.rows);
+  // console.log(result.rows);
   res.render('dataCountry', { resultData: result.rows });
+});
+
+router.get('/dataProvince/:country/:province',async function(req, res, next) {
+  console.log("---------------------------------------------------------------------------------------------------------------------------------------");
+  console.log(req.params.country);
+  console.log(req.params.province);
+  console.log("---------------------------------------------------------------------------------------------------------------------------------------");
+  var country = req.params.country;
+  var province = req.params.province;
+  const result = await db.srcProvince(country,province);
+  console.log(result.rows);
+  res.render('dataProvince', { resultData: result.rows });
 });
 
 module.exports = router;

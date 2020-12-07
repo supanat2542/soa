@@ -13,12 +13,8 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-      <a class="navbar-brand" href="#">Covid - 19</a>
-      <!-- <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-          aria-expanded="false" aria-label="Toggle navigation">
-        <span class="home-toggler-icon"></span>
-      </button> -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Covid - 19</a>
       <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item active">
@@ -36,15 +32,10 @@
             </div>
           </li>
         </ul>
-        <!-- <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
       </div>
     </nav>
-
+    <div id="mapid"></div>
     <div class="container">
-      <div id="mapid"></div>
       <table class="table">
         <thead>
           <tr>
@@ -66,9 +57,11 @@
               <td><%=data.dead%></td>
               <td><%=data.recover%></td>
               <td scope="row">
-                <a href="/dataCountry/<%=data.country%>">
-                    Checkmore
+                <button type="button" class="btn btn-primary">
+                <a style="color: aliceblue;" href='/dataCountry/<%=data.country%>'>
+                    Viewmore
                 </a>
+                </button>
             </td>
             </tr>
             <% }); %>
@@ -90,9 +83,9 @@
       }).addTo(map);
   </script>
 
-  <% resultData.forEach(function(data){ %>
+  
     <script>
-        var goldIcon = new L.Icon({
+        var Icon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [20, 30],
@@ -100,19 +93,21 @@
             popupAnchor: [1, -34],
             shadowSize: [5, 5]
         });
+        '<% resultData.forEach(function(data){ %>'
             var markers = [
-                ["<b style='font-size:15pt;'> <%=data.country%> </b> <br><b style='font-size:10pt;'> Confirmed : <%=data.confirm%><b> <br><b style='font-size:10pt;'> Death : <%=data.dead%><b> <br><b style='font-size:10pt;'> Recovered : <%=data.recover%><b>", ('<%=data.lat%>'), ('<%=data.long%>')],
+                ["<b style='font-size:15pt;'> <%=data.country%> </b> <br><b style='font-size:10pt;'> Province : <%=data.state%><b><br><b style='font-size:8pt;'> Confirmed : <%=data.confirm%><b> <br><b style='font-size:8pt;'> Death : <%=data.dead%><b> <br><b style='font-size:8pt;'> Recovered : <%=data.recover%><b><br><a style='font-size:8pt;' href='/dataCountry/<%=data.country%>'>Viewmore</a>", ('<%=data.lat%>'), ('<%=data.long%>')],
             ];
             for (var i = 0; i < markers.length; i++) {
                 marker = L.marker([markers[i][1], markers[i][2]], {
-                        icon: goldIcon
+                        icon: Icon
                     })
                     .bindPopup(markers[i][0])
                     .openPopup()
                     .addTo(map);
             }
+            '<% }); %>'
     </script>
-    <% }); %>
+
 
   </body>
 </html>
