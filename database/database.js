@@ -92,6 +92,7 @@ async function srcProvince(country,province){
 }
 
 
+
 module.exports={
     getdata,
     srcCountry,
@@ -99,5 +100,5 @@ module.exports={
     gettable,
     getdead,
     getrecover,
-    srcProvince
+    srcProvince,
 }
